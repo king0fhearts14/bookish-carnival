@@ -1,0 +1,26 @@
+#bad char discovery in immunity using Mona.py
+
+#Step1
+#Set working folder for reference
+
+!mona config -set workingfolder c:\logs\%p
+
+#Step2
+#Create a byte array, which will need to go in your buffer after your break point and ESP offset value
+
+!mona bytearray 
+
+#Step3
+#run your POC then run mona to compare the stack to your byte array
+
+!mona compare -f C:\logs\...\bytearray.bin -a %ESPVALUE
+
+##The time saving trick is that in the mona memory comparison results, consecutive numbers may be a false positive when only the first value is bad.
+#If you see 04,05,06 for example, chances are only 04 is the bad character. Remove 04 and rerun to test.
+
+#Step4
+#update bytearray to remove bad chars
+
+!mona bytearray -cpb "\x??\x??"
+
+#repeat steps 3 and 4 until the memory comparison result is clean. 
