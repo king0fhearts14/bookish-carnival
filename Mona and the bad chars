@@ -10,8 +10,13 @@
 
 !mona bytearray 
 
+#Step2.5
+#edit bytearray to remove 00 and 40 to save time
+
+!mona bytearray -cpb "\x00\x40"
+
 #Step3
-#run your POC then run mona to compare the stack to your byte array
+#Insert the bytearray into your POC after your breakpoint and EIP space, fill the rest of your buffer and test
 
 !mona compare -f C:\logs\...\bytearray.bin -a %ESPVALUE
 
